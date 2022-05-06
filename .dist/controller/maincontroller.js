@@ -7,20 +7,31 @@ exports.userController = void 0;
 const joi_1 = __importDefault(require("joi"));
 const modelmain_1 = __importDefault(require("../models/modelmain"));
 const userData = modelmain_1.default;
+// const bcrypt = require("bcrypt");
 // create new users
 let newUser = function (req, res) {
     // creating new user
-    const user = new userData(req.body);
+    // const user = new userData(req.body);
     const schema = joi_1.default.object({
         name: joi_1.default.string().required(),
         age: joi_1.default.number().required(),
         process: joi_1.default.string().required(),
+        email: joi_1.default.string().required(),
+        password: joi_1.default.string().required()
     });
     const params = schema.validate(req.body, { abortEarly: false });
     if (params.error) {
         res.status(403).send(params.error);
         return;
     }
+    let userInput = req.body;
+    const user = new userData({
+        name: userInput.name,
+        age: userInput.age,
+        process: userInput.process,
+        email: userInput.email,
+        password: userInput.password
+    });
     // saving user 
     user.save();
     // sending response with status ok
@@ -84,11 +95,30 @@ let getByName = async (req, res) => {
         res.status(404).send(e);
     }
 };
+let loginUser = async (req, res) => {
+    try {
+        const email = req.body.email;
+        const password = req.body.password;
+        const studentlogin = await userData.findOne({ email: email });
+        // res.send(studentlogin)
+        if (studentlogin?.password === password) {
+            res.status(201).send(studentlogin);
+            // console.log(res.status(201).send(studentlogin))
+        }
+        else {
+            res.send("password is in correct");
+        }
+    }
+    catch (e) {
+        res.status(400).send(e);
+    }
+};
 exports.userController = {
     allUser,
     newUser,
     deleteUser,
     getById,
     updateById,
-    getByName
+    getByName,
+    loginUser
 };

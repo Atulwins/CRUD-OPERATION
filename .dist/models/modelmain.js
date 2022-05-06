@@ -42,6 +42,14 @@ const userSchema = new schema({
     process: {
         type: String,
         required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
     }
 });
 const userModel = (0, mongoose_1.model)('User', userSchema);

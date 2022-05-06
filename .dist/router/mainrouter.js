@@ -19,3 +19,5 @@ exports.route.delete('/delete/:id', maincontroller_1.userController.deleteUser);
 exports.route.patch('/user/:id', maincontroller_1.userController.updateById);
 // name
 exports.route.get('/getUser/:name', maincontroller_1.userController.getByName);
+// login
+exports.route.post('/login', maincontroller_1.userController.loginUser);

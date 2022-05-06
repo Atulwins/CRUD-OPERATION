@@ -19,3 +19,5 @@ route.delete('/delete/:id',userController.deleteUser);
 route.patch('/user/:id',userController.updateById);
 // name
 route.get('/getUser/:name',userController.getByName);
+// login
+route.post('/login',userController.loginUser);
