@@ -1,7 +1,7 @@
 import express, { Application, Router } from "express";
 import { json } from "body-parser";
 import { connect, ConnectOptions } from "mongoose";
-import {route} from "./router/mainrouter";
+import { route } from "./router/mainrouter";
 
 export default class App {
     public app: Application;
@@ -16,7 +16,8 @@ export default class App {
     }
 
     private connectToMongo() {
-        connect(`mongodb://localhost:27017/CRUD-api`, {
+        let Db_Url: any = process.env.DATABASE_URL
+        connect(Db_Url, {
             useUnifiedTopology: true,
             useNewUrlParser: true,
         } as ConnectOptions)
@@ -33,7 +34,7 @@ export default class App {
         this.app.use(json());
     }
 
-    private ConnectToRoute(){
+    private ConnectToRoute() {
         this.app.use(route);
     }
 

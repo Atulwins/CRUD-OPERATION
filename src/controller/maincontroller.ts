@@ -2,8 +2,9 @@ import joi from 'joi';
 import { Request, Response } from 'express';
 import userModel from '../models/modelmain';
 import bcrypt from "bcrypt";
-import STATUS_CODES from '../utils/statuscode'
-import sendReponse from '../utils/response'
+import jwt from 'jsonwebtoken';
+import STATUS_CODES from '../utils/statuscode';
+import sendReponse from '../utils/response';
 const userData = userModel;
 
 
@@ -36,7 +37,6 @@ let newUser = async function (req: Request, res: Response) {
         email: userInput.email,
         password: userInput.password
     })
-
     // saving user 
     user.save()
     // sending response with status ok
@@ -122,8 +122,12 @@ let loginUser = async (req: Request, res: Response) => {
         // res.send(userlogin)
         const checkPass = await bcrypt.compare(password, userlogin.password)
         if (checkPass === true) {
+
+            const createToken = jwt.sign({_id:"any"},"qwertyuiopasdfghjklzxcvbnmqwerty")
+            
+
             // res.status(201).send({msg:"login sucessfull"});
-            return sendReponse(res, { message: "Login Sucessful" }, STATUS_CODES.ok)
+            return sendReponse(res, { message: "Login Sucessful",token:createToken }, STATUS_CODES.ok)
             // console.log(res.status(201).send(userlogin))
 
         }
@@ -150,6 +154,19 @@ export const userController = {
     getById,
     updateById,
     getByName,
-    loginUser
+    loginUser,
+    
+}
+
+function _id(_id: any): any {
+    throw new Error('Function not implemented.');
+}
+
+function jsonwebtoken(arg0: { id: any; }, jsonwebtoken: any) {
+    throw new Error('Function not implemented.');
+}
+
+function id(id: any): never {
+    throw new Error('Function not implemented.');
 }
 
