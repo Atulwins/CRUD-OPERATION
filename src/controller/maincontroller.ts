@@ -98,9 +98,9 @@ let getByName = async (req: Request, res: Response) => {
         const userByName = await userData.findOne({ name: req.params.name })
         if (userByName === null) {
             return sendReponse(res, { message: "invalid credential" }, STATUS_CODES.not_found)
-        // res.status(200).send(userByName)
+            // res.status(200).send(userByName)
         }
-        else{
+        else {
             return sendReponse(res, { message: "valid credential" }, STATUS_CODES.ok)
 
         }
@@ -124,10 +124,11 @@ let loginUser = async (req: Request, res: Response) => {
         if (checkPass === true) {
 
             const createToken = jwt.sign({_id:"any"},"qwertyuiopasdfghjklzxcvbnmqwerty")
-            
+            // const createToken = jwt.sign(user,)
+            // res.json({ createToken: createToken })
 
             // res.status(201).send({msg:"login sucessfull"});
-            return sendReponse(res, { message: "Login Sucessful",token:createToken }, STATUS_CODES.ok)
+            return sendReponse(res, { message: "Login Sucessful", token: createToken }, STATUS_CODES.ok)
             // console.log(res.status(201).send(userlogin))
 
         }
@@ -155,7 +156,7 @@ export const userController = {
     updateById,
     getByName,
     loginUser,
-    
+
 }
 
 function _id(_id: any): any {
@@ -167,6 +168,10 @@ function jsonwebtoken(arg0: { id: any; }, jsonwebtoken: any) {
 }
 
 function id(id: any): never {
+    throw new Error('Function not implemented.');
+}
+
+function user(user: any, ACCESS_TOKEN_SECRET: string | undefined) {
     throw new Error('Function not implemented.');
 }
 
