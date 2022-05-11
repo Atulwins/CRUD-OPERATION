@@ -31,7 +31,7 @@ const userSchema = new schema<user>({
         type: String,
         required:true
     }
-   
+
 
 })
 

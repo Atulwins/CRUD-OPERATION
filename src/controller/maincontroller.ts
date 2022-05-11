@@ -6,9 +6,7 @@ import jwt from 'jsonwebtoken';
 import STATUS_CODES from '../utils/statuscode';
 import sendReponse from '../utils/response';
 const userData = userModel;
-
-
-
+const multer = require('multer');
 
 // create new users
 
@@ -112,6 +110,8 @@ let getByName = async (req: Request, res: Response) => {
 
     }
 }
+   
+// login auth with token
 
 let loginUser = async (req: Request, res: Response) => {
     try {
@@ -123,11 +123,8 @@ let loginUser = async (req: Request, res: Response) => {
         const checkPass = await bcrypt.compare(password, userlogin.password)
         if (checkPass === true) {
 
-            const createToken = jwt.sign({_id:"any"},"qwertyuiopasdfghjklzxcvbnmqwerty")
-            // const createToken = jwt.sign(user,)
-            // res.json({ createToken: createToken })
+            const createToken = jwt.sign({_id:"any"}, "qwertyuiopasdfghjkzxcvbnmqwerty")
 
-            // res.status(201).send({msg:"login sucessfull"});
             return sendReponse(res, { message: "Login Sucessful", token: createToken }, STATUS_CODES.ok)
             // console.log(res.status(201).send(userlogin))
 
@@ -142,7 +139,10 @@ let loginUser = async (req: Request, res: Response) => {
         // res.status(400).send(error)
     }
 }
-
+//  user profile
+// let userProfile =async (req:Request,res:Response) => {
+    
+// }
 
 
 
@@ -156,22 +156,4 @@ export const userController = {
     updateById,
     getByName,
     loginUser,
-
 }
-
-function _id(_id: any): any {
-    throw new Error('Function not implemented.');
-}
-
-function jsonwebtoken(arg0: { id: any; }, jsonwebtoken: any) {
-    throw new Error('Function not implemented.');
-}
-
-function id(id: any): never {
-    throw new Error('Function not implemented.');
-}
-
-function user(user: any, ACCESS_TOKEN_SECRET: string | undefined) {
-    throw new Error('Function not implemented.');
-}
-
